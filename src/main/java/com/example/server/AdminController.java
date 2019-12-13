@@ -1,6 +1,6 @@
 package com.example.server;
 
-import org.springframework.data.jpa.repository.Query;
+import com.example.server.dao.AdminRepository;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,20 +17,18 @@ public class AdminController {
         return repository.findAll();
     }
 
-    @GetMapping("/aut")
+    @GetMapping("/authorization")
     Boolean Autorization(@RequestParam(name = "login")String login,
       @RequestParam(name = "password")String password) {
-
-     List<Admin> admins = repository.findAll();
-     Admin admin = new Admin();
-
-        if(true){
-            return true;
-        }else{
-            return false;
-        }
+    if(repository.findByLogin(login)!= null && repository.findByPassword(password)!= null){
+        return true;
+    }else{
+        return false;
+    }
 
     }
+
+
 
     @PostMapping("/admins")
     Admin newGood(@RequestBody Admin newAdmin) {
@@ -52,8 +50,6 @@ public class AdminController {
                     Admin.setLogin(newAdmin.getLogin());
                     Admin.setPassword(newAdmin.getPassword());
                     Admin.setFio(newAdmin.getFio());
-                    Admin.setDatetimechange(newAdmin.getDatetimechange());
-                    Admin.setIdchangedperson(newAdmin.getIdchangedperson());
 
                     return repository.save(Admin);
                 })

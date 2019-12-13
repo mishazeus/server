@@ -1,30 +1,33 @@
 package com.example.server;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "admin", schema = "qrinvent")
 public class Admin {
 
-    private @Id @GeneratedValue
-    Integer id;
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name= "increment", strategy= "increment")
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     private String login;
     private String password;
     private String fio;
-    private String datetimechange;
-    private Integer idchangedperson;
 
-    public Admin(){
+
+    public Admin() {
     }
 
-    public Admin(String login, String password, String fio, String dateTimeChange, Integer idchangedpersone){
+    public Admin(String login, String password, String fio) {
 
         this.login = login;
         this.password = password;
         this.fio = fio;
-        this.datetimechange = dateTimeChange;
-        this.idchangedperson = idchangedpersone;
+
     }
 
     public Integer getId() {
@@ -59,19 +62,4 @@ public class Admin {
         this.fio = fio;
     }
 
-    public String getDatetimechange() {
-        return datetimechange;
-    }
-
-    public void setDatetimechange(String datetimechange) {
-        this.datetimechange = datetimechange;
-    }
-
-    public Integer getIdchangedperson() {
-        return idchangedperson;
-    }
-
-    public void setIdchangedperson(Integer idchangedperson) {
-        this.idchangedperson = idchangedperson;
-    }
 }
